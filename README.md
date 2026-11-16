@@ -2,22 +2,22 @@
 
 In-game soundboard for MetaHookSv (GoldSrc / Sven Co-op): a VGUI2 library of
 sounds with categories, chat triggers, hotkeys, event reactions and text to
-speech. Voice broadcasting is delegated to
-[VoiceExtension](https://github.com/ej-mentol/VoiceExtension); Soundpad itself
-never touches the engine voice path.
+speech. Voice broadcasting is delegated to VoiceExtension, a separate plugin;
+Soundpad itself never touches the engine voice path.
 
 ## Requirements
 
 - MetaHookSv loader (client plugin).
 - VGUI2Extension — the window is built from its controls.
-- VoiceExtension — required only for broadcasting to other players. Without it
-  Soundpad still opens, plays sounds locally and reports one warning per
-  broadcast attempt.
+- VoiceExtension — a separate plugin, **not included** in this repository or
+  in the DLL release. Required for broadcasting; without it Soundpad still
+  opens, plays sounds locally and reports one warning per broadcast attempt.
 
 ## Install
 
 1. Copy `Soundpad.dll` to `<game>/metahook/plugins/`.
-2. Copy `VoiceExtension.dll` there as well if you want to broadcast.
+2. Copy `VoiceExtension.dll` (obtained separately, it is not part of this
+   release) to the same folder if you want to broadcast.
 3. Start the game, open the console and run `soundpad` (or bind a key:
    `bind "p" "soundpad"`).
 
