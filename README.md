@@ -132,7 +132,9 @@ Changes are written to the file as they are made; `Save` in the window or `sp_sa
 
 ## Build (optional)
 
-Visual Studio 2022, `Release | Win32`, static CRT:
+Visual Studio 2022, `Release | Win32`, static CRT. The project needs the MetaHook
+SDK: set `METAHOOK_SOURCE_PATH`, or keep a `MetaHook` checkout next to the
+plugin directory (`..\..\MetaHook`). VGUI2 interfaces are vendored in `include/`.
 
 ```
 build_plugin.bat
