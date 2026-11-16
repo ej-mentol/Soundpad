@@ -1,0 +1,23 @@
+# Build outputs & Visual Studio cache
+/build/
+/install/
+/.vs/
+*.user
+/Debug/
+/Release/
+/Release_AVX2/
+
+# Binary test runners and local backup libraries
+*.bak
+lib/*.bak
+lib/*.lib.*
+
+# Internal AI agent memory, working notes, and review reports
+# (Suppressed to keep public repository history clean; see memory/README.md)
+/memory/
+/rules/
+REVIEW_REPORT.md
+CMAKE_REVIEW.md
+
+# Generated during CMake configuration
+/.clang-format

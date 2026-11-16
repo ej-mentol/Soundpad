@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_AVX2|Win32">
+      <Configuration>Release_AVX2</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A8C3B5E1-7294-4F3D-8D92-C4B18E295E70}</ProjectGuid>
+    <RootNamespace>Soundpad</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <PropertyGroup Label="MetaHookConfig">
+    <MetaHookSvRoot Condition="'$(MetaHookSvRoot)' == '' and exists('$([System.IO.Path]::GetFullPath(&quot;$(MSBuildProjectDirectory)\..\..&quot;))\MetaHook\include\metahook.h')">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\..\.."))</MetaHookSvRoot>
+    <MetaHookSvRoot Condition="'$(MetaHookSvRoot)' == '' and exists('$([System.IO.Path]::GetFullPath(&quot;$(MSBuildProjectDirectory)\..\..&quot;))\include\metahook.h')">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\..\.."))</MetaHookSvRoot>
+    <MetaHookSvRoot Condition="'$(MetaHookSvRoot)' == ''">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\..\.."))</MetaHookSvRoot>
+
+    <MetaHookDir Condition="'$(MetaHookDir)' == '' and '$(METAHOOK_SOURCE_PATH)' != ''">$(METAHOOK_SOURCE_PATH)</MetaHookDir>
+    <MetaHookDir Condition="'$(MetaHookDir)' == '' and exists('$(MetaHookSvRoot)\MetaHook\include\metahook.h')">$(MetaHookSvRoot)\MetaHook</MetaHookDir>
+    <MetaHookDir Condition="'$(MetaHookDir)' == '' and exists('$(MetaHookSvRoot)\include\metahook.h')">$(MetaHookSvRoot)</MetaHookDir>
+    <MetaHookDir Condition="'$(MetaHookDir)' == ''">$(MetaHookSvRoot)\MetaHook</MetaHookDir>
+
+    <!-- Essential VGUI2 definitions that used to be in global_common.props -->
+    <VGUI2ExtensionDefines Condition="'$(VGUI2ExtensionDefines)' == ''">STEAM_API_NODLL;VGUI_USE_SURFACE2;VGUI_USE_SCHEME2;VGUI_USE_INPUT2;NO_MALLOC_OVERRIDE;NO_TIER0_MINIDUMP;NO_VCR</VGUI2ExtensionDefines>
+
+    <!-- Normalize SolutionDir so macros that rely on it find MetaHookSv root -->
+    <SolutionDir Condition="'$(SolutionDir)' == '' or !exists('$(SolutionDir)MetaHook')">$(MetaHookSvRoot)\</SolutionDir>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_AVX2|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_AVX2|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_AVX2|Win32'">
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)_AVX2</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)include;$(ProjectDir)include\Interface;$(ProjectDir)include\Interface\VGUI;$(MSBuildProjectDirectory)\src;$(MSBuildProjectDirectory)\include;$(MSBuildProjectDirectory)\include\Interface;$(MSBuildProjectDirectory)\include\Interface\VGUI;$(MetaHookSvRoot)\Plugins\VGUI2Extension\include\Interface;$(MetaHookSvRoot)\Plugins\VGUI2Extension\include\Interface\VGUI;$(MetaHookDir)\include;$(MetaHookDir)\include\Interface;$(MetaHookDir)\include\Interface\VGUI;$(MetaHookDir)\include\HLSDK\cl_dll;$(MetaHookDir)\include\HLSDK\common;$(MetaHookDir)\include\HLSDK\engine;$(MetaHookDir)\include\HLSDK\pm_shared;$(MetaHookDir)\include\HLSDK\public;$(MetaHookDir)\include\VGUI;$(MetaHookDir)\include\vgui_controls;$(MetaHookDir)\include\SourceSDK;$(MetaHookDir)\include\SourceSDK\tier0;$(MetaHookDir)\include\SourceSDK\tier1;$(MetaHookDir)\include\SourceSDK\vstdlib;$(MetaHookDir)\include\SteamSDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;NO_MALLOC_OVERRIDE;$(VGUI2ExtensionDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <DisableSpecificWarnings>4291;4311;4312;4819;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;ole32.lib;oleaut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)include;$(ProjectDir)include\Interface;$(ProjectDir)include\Interface\VGUI;$(MSBuildProjectDirectory)\src;$(MSBuildProjectDirectory)\include;$(MSBuildProjectDirectory)\include\Interface;$(MSBuildProjectDirectory)\include\Interface\VGUI;$(MetaHookSvRoot)\Plugins\VGUI2Extension\include\Interface;$(MetaHookSvRoot)\Plugins\VGUI2Extension\include\Interface\VGUI;$(MetaHookDir)\include;$(MetaHookDir)\include\Interface;$(MetaHookDir)\include\Interface\VGUI;$(MetaHookDir)\include\HLSDK\cl_dll;$(MetaHookDir)\include\HLSDK\common;$(MetaHookDir)\include\HLSDK\engine;$(MetaHookDir)\include\HLSDK\pm_shared;$(MetaHookDir)\include\HLSDK\public;$(MetaHookDir)\include\VGUI;$(MetaHookDir)\include\vgui_controls;$(MetaHookDir)\include\SourceSDK;$(MetaHookDir)\include\SourceSDK\tier0;$(MetaHookDir)\include\SourceSDK\tier1;$(MetaHookDir)\include\SourceSDK\vstdlib;$(MetaHookDir)\include\SteamSDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;NO_MALLOC_OVERRIDE;$(VGUI2ExtensionDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <DisableSpecificWarnings>4091;4291;4311;4312;4819;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;ole32.lib;oleaut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_AVX2|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)include;$(ProjectDir)include\Interface;$(ProjectDir)include\Interface\VGUI;$(MSBuildProjectDirectory)\src;$(MSBuildProjectDirectory)\include;$(MSBuildProjectDirectory)\include\Interface;$(MSBuildProjectDirectory)\include\Interface\VGUI;$(MetaHookSvRoot)\Plugins\VGUI2Extension\include\Interface;$(MetaHookSvRoot)\Plugins\VGUI2Extension\include\Interface\VGUI;$(MetaHookDir)\include;$(MetaHookDir)\include\Interface;$(MetaHookDir)\include\Interface\VGUI;$(MetaHookDir)\include\HLSDK\cl_dll;$(MetaHookDir)\include\HLSDK\common;$(MetaHookDir)\include\HLSDK\engine;$(MetaHookDir)\include\HLSDK\pm_shared;$(MetaHookDir)\include\HLSDK\public;$(MetaHookDir)\include\VGUI;$(MetaHookDir)\include\vgui_controls;$(MetaHookDir)\include\SourceSDK;$(MetaHookDir)\include\SourceSDK\tier0;$(MetaHookDir)\include\SourceSDK\tier1;$(MetaHookDir)\include\SourceSDK\vstdlib;$(MetaHookDir)\include\SteamSDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;NO_MALLOC_OVERRIDE;$(VGUI2ExtensionDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <DisableSpecificWarnings>4091;4291;4311;4312;4819;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;ole32.lib;oleaut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MetaHookDir)\include\HLSDK\common\interface.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\Bitmap.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\Border.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\filesystem.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\filesystem_helpers.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\mathlib\3dnow.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\mathlib\mathlib_base.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\mathlib\sse.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\assert_dialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\cpu.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\dbg.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\fasttimer.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\mem.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\memdbg.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\memstd.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\mem_helpers.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\minidump.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\platform.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier0\threadtools.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\characterset.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\generichash.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\KeyValues.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\mempool.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\memstack.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\stringpool.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\strtools.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\utlbuffer.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\utlstring.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\tier1\utlsymbol.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\vstdlib\KeyValuesSystem.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\SourceSDK\vstdlib\random.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\AnalogBar.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\AnimatingImagePanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\AnimationController.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\BitmapImagePanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\BuildFactoryHelper.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\BuildGroup.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\BuildModeDialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Button.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\CheckButton.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\CheckButtonList.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\CircularProgressBar.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ComboBox.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\consoledialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ControllerMap.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Controls.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\CvarSlider.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\CvarTextEntry.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\CvarToggleCheckButton.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\DirectorySelectDialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Divider.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\EditablePanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ExpandButton.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\FileOpenDialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\FocusNavGroup.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Frame.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\GraphPanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\HTML.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Image.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ImageList.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ImagePanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\InputDialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\KeyBindingHelpDialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\KeyBoardEditorDialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\KeyRepeat.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Label.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ListPanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ListViewPanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\MemoryBitmap.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Menu.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\MenuBar.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\MenuButton.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\MenuItem.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\MessageBox.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\MessageDialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Panel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\PanelListPanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ProgressBar.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ProgressBox.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\PropertyDialog.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\PropertyPage.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\PropertySheet.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\QueryBox.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\RadioButton.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\RichText.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\RotatingProgressBar.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\savedocumentquery.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ScrollableEditablePanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ScrollBar.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ScrollBarSlider.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\SectionedListPanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Slider.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Splitter.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\subrectimage.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\TextEntry.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\TextImage.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ToggleButton.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\Tooltip.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\ToolWindow.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\TreeView.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\TreeViewListControl.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\URLLabel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\vgui_controls.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\WizardPanel.cpp" />
+    <ClCompile Include="$(MetaHookDir)\include\vgui_controls\WizardSubPanel.cpp" />
+    <ClCompile Include="src\VGUI2ExtensionImport.cpp" />
+    <ClCompile Include="src\VoiceExtensionImport.cpp" />
+    <ClCompile Include="src\SoundEngine.cpp" />
+    <ClCompile Include="src\SoundpadConfig.cpp" />
+    <ClCompile Include="src\SoundpadFrame.cpp" />
+    <ClCompile Include="src\plugins.cpp" />
+    <ClCompile Include="src\GameState.cpp" />
+    <ClCompile Include="src\KlatterData.cpp" />
+    <ClCompile Include="src\KlatterEngine.cpp" />
+    <ClCompile Include="src\SapiEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MetaHookDir)\include\HLSDK\common\interface.h" />
+    <ClInclude Include="include\Interface\IVoiceExtension.h" />
+    <ClInclude Include="src\VGUI2ExtensionImport.h" />
+    <ClInclude Include="src\VoiceExtensionImport.h" />
+    <ClInclude Include="src\SoundEngine.h" />
+    <ClInclude Include="src\SoundpadConfig.h" />
+    <ClInclude Include="src\SoundpadFrame.h" />
+    <ClInclude Include="src\plugins.h" />
+    <ClInclude Include="src\GameState.h" />
+    <ClInclude Include="src\KlatterData.h" />
+    <ClInclude Include="src\KlatterEngine.h" />
+    <ClInclude Include="src\SapiEngine.h" />
+    <ClInclude Include="src\minimp3.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
